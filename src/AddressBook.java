@@ -20,7 +20,7 @@ public class AddressBook {
         BuddyInfo  baby= new BuddyInfo(675, "randa","1125 colonel by dr");
         AddressBook addressBook = new AddressBook();
         addressBook.addBuddy(baby);
-        addressBook.removeBuddy(baby);
+        addressBook.removeBuddy(baby) ;
     }
 
 
