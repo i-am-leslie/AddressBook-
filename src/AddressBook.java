@@ -6,21 +6,29 @@ public class AddressBook {
 
     public AddressBook() {
        this.buds=new ArrayList<BuddyInfo>();
-       System.out.println("Address book");
+
     }
 
     public void addBuddy(BuddyInfo friend){
-        buds.add(friend);
+        if(friend!=null){
+            buds.add(friend);
+        }
     }
-    public void removeBuddy(BuddyInfo friend) {
-        buds.remove(friend);
+    public BuddyInfo removeBuddy(int index) {
+        if(index < buds.size() && index>=0){
+            return buds.remove(index);
+        }
+        return null;
 
     }
     public static void main(String[] args){
         BuddyInfo  baby= new BuddyInfo(675, "randa","1125 colonel by dr");
+        BuddyInfo  baby1= new BuddyInfo(675, "randa","1125 colonel by dr");
+
         AddressBook addressBook = new AddressBook();
         addressBook.addBuddy(baby);
-        addressBook.removeBuddy(baby) ;
+        addressBook.addBuddy(baby1);
+        addressBook.removeBuddy(0) ;
     }
 
 
