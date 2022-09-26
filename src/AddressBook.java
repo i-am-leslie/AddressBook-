@@ -29,6 +29,7 @@ public class AddressBook {
         addressBook.addBuddy(baby);
         addressBook.addBuddy(baby1);
         addressBook.removeBuddy(0) ;
+        System.out.println("order");
     }
 
 
