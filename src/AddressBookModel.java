@@ -3,14 +3,24 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class AddressBookModel extends DefaultListModel {
+public class AddressBookModel extends DefaultListModel implements  Serializable {
     private ArrayList<BuddyInfo> buds;
     private DefaultListModel<String> listModel;
+    private boolean serializeState;
 
     public AddressBookModel() {
         listModel=new DefaultListModel<>();
         this.buds=new ArrayList<BuddyInfo>();
+        this.serializeState=false;
 
+    }
+
+    public boolean isSerializeState() {
+        return serializeState;
+    }
+
+    public void changeSerializeState() {
+        this.serializeState = !this.serializeState;
     }
 
     public void addBuddy(BuddyInfo friend){
@@ -71,6 +81,39 @@ public class AddressBookModel extends DefaultListModel {
         return true;
 
 
+    }
+    public boolean serilizationsave(String fileName){
+        try{
+            ObjectOutputStream object=new ObjectOutputStream(new FileOutputStream(fileName+".txt"));
+            for(BuddyInfo b: buds){
+                object.writeObject(b);
+
+            }
+            object.close();
+        }catch(IOException e){
+            return false;
+        }
+       return true;
+
+    }
+    public boolean serilizationImport(String s){
+        try{
+            ObjectInputStream object=new ObjectInputStream(new FileInputStream(s+".txt"));
+            while (true){
+                try {
+                    addBuddy((BuddyInfo) object.readObject());
+                } catch (IOException e) {
+                    break;
+                } catch (ClassNotFoundException e) {
+                    return false;
+                }
+
+            }
+            object.close();
+        }catch(IOException e){
+            return false;
+        }
+        return true;
     }
 
     public static void main(String[] args){

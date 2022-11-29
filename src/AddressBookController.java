@@ -42,6 +42,8 @@ public class AddressBookController implements ActionListener {
         } else if (e.getActionCommand().equals(("import"))) {
             String g = JOptionPane.showInputDialog("File Name");
             model.importAddressBook(g);
+        }else if (e.getActionCommand().equals(("serialize/unserialize"))) {
+            model.changeSerializeState();
         }
     }
 }

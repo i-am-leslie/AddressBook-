@@ -24,6 +24,7 @@ public class AddressBookFrame extends JFrame {
 
         JMenuItem export=new JMenuItem("Export");
         JMenuItem importFile=new JMenuItem("import");
+        JMenuItem serialize=new JMenuItem("serialize/unserialize");
 
         addBuddy.setActionCommand(addBuddy.getText());
         addBuddy.addActionListener(control);
@@ -36,6 +37,8 @@ public class AddressBookFrame extends JFrame {
         export.addActionListener(control);
         importFile.setActionCommand(importFile.getText());
         importFile.addActionListener(control);
+        serialize.setActionCommand(serialize.getText());
+        serialize.addActionListener(control);
 
 
         menu.add(addBuddy);

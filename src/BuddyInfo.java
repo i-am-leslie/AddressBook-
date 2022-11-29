@@ -1,4 +1,6 @@
-public class BuddyInfo {
+import java.io.Serializable;
+
+public class BuddyInfo implements Serializable {
     private int phoneNumber;
     private String name;
     private String address;
@@ -26,7 +28,6 @@ public class BuddyInfo {
 //        System.out.print(str.toString().);
 //        return str.toString();
         String s=getName()+"#"+getAddress()+"#"+getPhoneNumber();
-        System.out.print(s);
         return s;
     }
     public static BuddyInfo importBuddyInfo(String bud){
