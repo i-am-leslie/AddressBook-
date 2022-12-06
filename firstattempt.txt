@@ -1,3 +1,17 @@
-leslie#1127 colonel#11
-sus#1129 colonel#10
-dan#1125 colonel#91
+<AddressBook>
+<BuddyInfo>
+<Name>leslie</Name>
+<Number>11</Number>
+<Address>1127 colonel</Address>
+</BuddyInfo>
+<BuddyInfo>
+<Name>sus</Name>
+<Number>10</Number>
+<Address>1129 colonel</Address>
+</BuddyInfo>
+<BuddyInfo>
+<Name>dan</Name>
+<Number>91</Number>
+<Address>1125 colonel</Address>
+</BuddyInfo>
+</AddressBook>

@@ -52,5 +52,20 @@ public class AddressBookModelTest {
 
     }
 
+    @Test
+    public void xmlTest(){
+        a.addBuddy(new BuddyInfo(11,"leslie","1127 colonel"));
+        a.addBuddy(new BuddyInfo(10,"sus","1129 colonel"));
+        a.addBuddy(new BuddyInfo(91,"dan","1125 colonel"));
+        a.exportToXmlFile("firstattempt");
+
+        b = AddressBookModel.importFromXmlFile("firstattempt");
+
+        for(int i=0;i<=2;i++){
+            assertEquals(b.getBuds().get(i), a.getBuds().get(i));
+        }
+
+    }
+
 
 }
