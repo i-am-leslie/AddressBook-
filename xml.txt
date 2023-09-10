@@ -1,0 +1,12 @@
+<AddressBook>
+<BuddyInfo>
+<Name>randa</Name>
+<Number>675</Number>
+<Address>1125 colonel by dr</Address>
+</BuddyInfo>
+<BuddyInfo>
+<Name>randa</Name>
+<Number>675</Number>
+<Address>1125 colonel by dr</Address>
+</BuddyInfo>
+</AddressBook>
