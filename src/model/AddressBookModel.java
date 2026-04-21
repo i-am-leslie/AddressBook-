@@ -1,3 +1,5 @@
+package model;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -8,17 +10,18 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class AddressBookModel extends DefaultHandler implements  Serializable {
-    private ArrayList<BuddyInfo> buds;
-    private DefaultListModel<String> listModel;
-    private boolean serializeState;
+    private final List<BuddyInfo> buddy;
+    public final DefaultListModel<String> buddyUiList = new DefaultListModel<>();
+    private boolean serializeState = false;
+    public static final String  FILEPATH= "/Users/ejehleslie/Desktop/AddressBook-/AddressBook.txt";
+    private static final String FILENAME = "AddressBook.txt";
 
     public AddressBookModel() {
-        listModel=new DefaultListModel<>();
-        this.buds=new ArrayList<BuddyInfo>();
-        this.serializeState=false;
-
+        this.buddy =new ArrayList<>();
     }
 
     public boolean isSerializeState() {
@@ -31,36 +34,32 @@ public class AddressBookModel extends DefaultHandler implements  Serializable {
 
     public void addBuddy(BuddyInfo friend){
         if(friend!=null){
-            buds.add(friend);
-            listModel.addElement(friend.getName());
+            buddy.add(friend);
+            buddyUiList.addElement(friend.getName());
         }
     }
-    public BuddyInfo removeBuddy(int index) {
-        if(index < buds.size() && index>=0){
-            listModel.remove(index);
-            return buds.remove(index);
-
+    public void removeBuddy(int index) {
+        if(index >= 0 && index < buddy.size()){
+            buddyUiList.remove(index);
+            buddy.remove(index);
         }
-        return null;
-
     }
 
-    public ArrayList<BuddyInfo> getBuds() {
-        return buds;
+    public List<BuddyInfo> getBuddy() {
+        return buddy;
     }
 
-    public DefaultListModel<String> getListModel() {
-        return listModel;
+    public DefaultListModel<String> getBuddyUiList() {
+        return buddyUiList;
     }
 
-    public boolean save(String name) {
-        File file=new File(name + ".txt");
+    public boolean save() {
+        File file=new File(FILEPATH);
 
         try {
-            FileWriter writer=new FileWriter(file);
-            for(BuddyInfo b:buds){
+            FileWriter writer=new FileWriter(file,true);
+            for(BuddyInfo b: buddy){
                 writer.write(b.toString()+"\n");
-
             }
             writer.close();
 
@@ -71,49 +70,44 @@ public class AddressBookModel extends DefaultHandler implements  Serializable {
         return true;
 
     }
-    public boolean importAddressBook(String fileName) {
+    public void importAddressBook() {
         try{
-            BufferedReader scan =new BufferedReader(new FileReader(fileName+".txt"));
+            BufferedReader scan =new BufferedReader(new FileReader(FILENAME));
             String s=scan.readLine();
             while (s!=null){
                 addBuddy(BuddyInfo.importBuddyInfo(s));
-                s=scan.readLine();
+                s = scan.readLine();
             }
         }catch(IOException e){
             System.out.println(e);
-            return false;
-
         }
-        return true;
-
-
     }
     public String toXML(){
         String output = "<AddressBook>\n";
-        for(BuddyInfo b:buds){
+        for(BuddyInfo b: buddy){
             output+= b.toXML();
 
         }
         output+="</AddressBook>\n";
         return output;
     }
-    public boolean serilizationsave(String fileName){
-        try{
-            ObjectOutputStream object=new ObjectOutputStream(new FileOutputStream(fileName+".txt"));
-            for(BuddyInfo b: buds){
-                object.writeObject(b);
 
+    public boolean serilizationSave(){
+        try{
+            ObjectOutputStream object=new ObjectOutputStream(new FileOutputStream(FILENAME));
+            for(BuddyInfo b: buddy){
+                object.writeObject(b);
             }
             object.close();
         }catch(IOException e){
             return false;
         }
        return true;
-
     }
+
     public boolean serilizationImport(String s){
         try{
-            ObjectInputStream object=new ObjectInputStream(new FileInputStream(s+".txt"));
+            ObjectInputStream object=new ObjectInputStream(new FileInputStream(FILENAME+ ".dat"));
             while (true){
                 try {
                     addBuddy((BuddyInfo) object.readObject());
@@ -148,9 +142,9 @@ public class AddressBookModel extends DefaultHandler implements  Serializable {
     public static AddressBookModel importFromXmlFile(String fileName) {
         try {
             AddressBookModel addressBookModel = new AddressBookModel();
-            File file = new File(fileName+".txt");
+            File file = new File(fileName);
 
-            SAXParserFactory spf = SAXParserFactory.newInstance() ;
+            SAXParserFactory spf = SAXParserFactory.newInstance();
             SAXParser s = spf.newSAXParser();
             DefaultHandler dh = new DefaultHandler () {
                 String tag = "";
@@ -164,13 +158,18 @@ public class AddressBookModel extends DefaultHandler implements  Serializable {
                     tag = "";
                 }
                 public void characters (char [] ch,int start, int length) {
-                    if(tag.equals("Name"))
-                        name = new String(ch, start, length);
-                    else if(this.tag.equals("Number"))
-                        number = Integer.parseInt(new String(ch, start, length));
-                    else if(this.tag.equals("Address")) {
-                        BuddyInfo buddyInfo = new BuddyInfo(number, name, new String(ch, start, length));
-                        addressBookModel.addBuddy(buddyInfo);
+
+                    switch (tag){
+                        case "Address":
+                            BuddyInfo buddyInfo = new BuddyInfo(number, name, new String(ch, start, length));
+                            addressBookModel.addBuddy(buddyInfo);
+                            break;
+                        case "Number":
+                            number = Integer.parseInt(new String(ch, start, length));
+                            break;
+                        case "Name":
+                            name = new String(ch, start, length);
+                            break;
                     }
                 }
 

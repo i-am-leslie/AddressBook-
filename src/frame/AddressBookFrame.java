@@ -1,9 +1,13 @@
+package frame;
+
+import controller.AddressBookController;
+import model.AddressBookModel;
+
 import javax.swing.*;
 
 public class AddressBookFrame extends JFrame {
 
-    private AddressBookModel model;
-    private JList<String> list;
+    private final JList<String> list;
     public enum commands{DELETE,ADD,REMOVE,VIEW};
 
 
@@ -12,8 +16,8 @@ public class AddressBookFrame extends JFrame {
         JMenuBar menuBar = new JMenuBar( );
         this.setJMenuBar(menuBar);
 
-        model =new AddressBookModel();
-        list = new JList<>(model.getListModel());
+        AddressBookModel model = new AddressBookModel();
+        list = new JList<>(model.getBuddyUiList());
         this.add(list);
         AddressBookController control=new AddressBookController(model,this);
 

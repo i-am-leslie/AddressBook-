@@ -1,17 +1,17 @@
 <AddressBook>
-<BuddyInfo>
+<model.BuddyInfo>
 <Name>leslie</Name>
 <Number>11</Number>
 <Address>1127 colonel</Address>
-</BuddyInfo>
-<BuddyInfo>
+</model.BuddyInfo>
+<model.BuddyInfo>
 <Name>sus</Name>
 <Number>10</Number>
 <Address>1129 colonel</Address>
-</BuddyInfo>
-<BuddyInfo>
+</model.BuddyInfo>
+<model.BuddyInfo>
 <Name>dan</Name>
 <Number>91</Number>
 <Address>1125 colonel</Address>
-</BuddyInfo>
+</model.BuddyInfo>
 </AddressBook>

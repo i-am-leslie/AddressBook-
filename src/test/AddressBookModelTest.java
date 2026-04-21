@@ -1,3 +1,7 @@
+package test;
+
+import model.AddressBookModel;
+import model.BuddyInfo;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,15 +28,11 @@ public class AddressBookModelTest {
         a.addBuddy(new BuddyInfo(11,"leslie","1127 colonel"));
         a.addBuddy(new BuddyInfo(10,"sus","1129 colonel"));
         a.addBuddy(new BuddyInfo(91,"dan","1125 colonel"));
-        assertTrue(a.save("firstattempt"));
+        assertTrue(a.save());
 
-        b.importAddressBook("firstattempt");
+        b.importAddressBook();
 
-        for(int i=0;i<=2;i++){
-            assertEquals(b.getBuds().get(i), a.getBuds().get(i));
-
-        }
-
+        assertArrayEquals(b.getBuddy().toArray(),a.getBuddy().toArray());
     }
 
 
@@ -41,15 +41,11 @@ public class AddressBookModelTest {
         a.addBuddy(new BuddyInfo(11,"leslie","1127 colonel"));
         a.addBuddy(new BuddyInfo(10,"sus","1129 colonel"));
         a.addBuddy(new BuddyInfo(91,"dan","1125 colonel"));
-        assertTrue(a.serilizationsave("firstattempt"));
+        assertTrue(a.serilizationSave());
 
         b.serilizationImport("firstattempt");
 
-        for(int i=0;i<=2;i++){
-            assertEquals(b.getBuds().get(i), a.getBuds().get(i));
-
-        }
-
+        assertArrayEquals(b.getBuddy().toArray(),a.getBuddy().toArray());
     }
 
     @Test
@@ -57,13 +53,11 @@ public class AddressBookModelTest {
         a.addBuddy(new BuddyInfo(11,"leslie","1127 colonel"));
         a.addBuddy(new BuddyInfo(10,"sus","1129 colonel"));
         a.addBuddy(new BuddyInfo(91,"dan","1125 colonel"));
-        a.exportToXmlFile("firstattempt");
+        a.exportToXmlFile("Address");
 
-        b = AddressBookModel.importFromXmlFile("firstattempt");
+        b = AddressBookModel.importFromXmlFile("Address.txt");
 
-        for(int i=0;i<=2;i++){
-            assertEquals(b.getBuds().get(i), a.getBuds().get(i));
-        }
+        assertArrayEquals(b.getBuddy().toArray(),a.getBuddy().toArray());
 
     }
 
