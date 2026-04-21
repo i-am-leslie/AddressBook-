@@ -11,7 +11,6 @@ import javax.xml.parsers.SAXParserFactory;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class AddressBookModel extends DefaultHandler implements  Serializable {
     private final List<BuddyInfo> buddy;
@@ -170,6 +169,8 @@ public class AddressBookModel extends DefaultHandler implements  Serializable {
                         case "Name":
                             name = new String(ch, start, length);
                             break;
+                        default:
+                            System.out.println(tag);
                     }
                 }
 

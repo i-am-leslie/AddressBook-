@@ -1,5 +1,6 @@
 package controller;
 
+import frame.AddressBookFrame;
 import model.AddressBookModel;
 import model.BuddyInfo;
 
